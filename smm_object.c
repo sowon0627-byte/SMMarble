@@ -58,14 +58,18 @@ char* smmObj_getName(int node_nr)
       return (smm_name[node_nr]);
 }
 
+int smmObj_getEnergy(int node_nr)
+{
+      return (smm_type[node_nr]);
+}
 int smmObj_getType(int node_nr)
 {
       return (smm_type[node_nr]);
 }
 
-char* smmObj_getTypeName(int node_nr)
+char* smmObj_getNodeName(int node_type)
 {
-      return (smmNodeName[smm_type[node_nr]]);
+      return (smmNodeName[node_type]);
 }
 
 

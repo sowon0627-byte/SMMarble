@@ -11,17 +11,23 @@
 
 #define MAX_NODENR      100
 #define MAX_NODETYPE    7
-#define MAX_GRADE       9
 
-#define SMMNODE_TYPE_LECTURE      0
-#define SMMNODE_TYPE_RESTAURANT   1
-#define SMMNODE_TYPE_LABORATORY   2
-#define SMMNODE_TYPE_HOME         3
-#define SMMNODE_TYPE_GOTOLAB      4
-#define SMMNODE_TYPE_FOODCHANGE   5
-#define SMMNODE_TYPE_FESTIVAL     6
+#define GRADE_AP        0
+#define GRADE_A0        1
+#define GRADE_AM        2
+#define GRADE_BP        3
+#define GRADE_B0        4
+#define GRADE_BM        5
+#define GRADE_CP        6
+#define GRADE_C0        7
+#define GRADE_CM        8
+#define GRADE_DP        9
+#define GRADE_D0        10
+#define GRADE_DM        11
+#define GRADE_F         12
 
-static char smmNodeName[MAX_NODETYPE][MAX_CHARNAME] = {
+
+static char smmObj_nodeName[MAX_NODETYPE][MAX_CHARNAME] = {
        "lecture",
        "restaurant",
        "laboratory",
@@ -31,55 +37,99 @@ static char smmNodeName[MAX_NODETYPE][MAX_CHARNAME] = {
        "festival"
 };
 
-static int smm_nodeNr=0;
-static char smm_name[MAX_NODENR][MAX_CHARNAME];
-static int smm_type[MAX_NODENR];
-static int smm_credit[MAX_NODENR];
-static int smm_energy[MAX_NODENR];
+static char smmObj_gradeName[SMMNODE_MAX_GRADE][MAX_CHARNAME] = {
+       "AP",
+       "A0",
+       "AM",
+       "BP",
+       "B0",
+       "BM",
+       "CP",
+       "C0",
+       "CM",
+       "DP",
+       "D0",
+       "DM",
+       "F"
+};
+
+
+//structure type definition
+typedef struct { 
+        char name[MAX_CHARNAME];
+        int objType;
+        int type;
+        int credit;
+        int energy;
+        int grade;
+} smmObj_object_t;
+
 
 //object generation
-int smmObj_genNode(char* name, int type, int credit, int energy)
+void* smmObj_genObject(char* name, int objType, int type, int credit, int energy, int grade)
 {
-    strcpy(smm_name[smm_nodeNr],name);
-    smm_type[smm_nodeNr] = type;
-    smm_credit[smm_nodeNr] = credit;
-    smm_energy[smm_nodeNr] = energy;
+    smmObj_object_t* ptr;
+    ptr = (smmObj_object_t*)malloc(sizeof(smmObj_object_t));
     
-    smm_nodeNr++;
+    strcpy(ptr->name, name);
+    ptr->type = type;
+    ptr->objType = objType;
+    ptr->credit = credit;
+    ptr->energy = energy;
+    ptr->grade = grade;
     
-    return (smm_nodeNr);
+    return ((void*)ptr);
 }
 
 
 
 //member retrieving
-char* smmObj_getName(int node_nr)
+char* smmObj_getObjectName(void *ptr)
 {
-      return (smm_name[node_nr]);
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+      
+      return (objPtr->name);
 }
 
-int smmObj_getEnergy(int node_nr)
+int smmObj_getObjectType(void *ptr)
 {
-      return (smm_type[node_nr]);
-}
-int smmObj_getType(int node_nr)
-{
-      return (smm_type[node_nr]);
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+    
+      return (objPtr->type);
 }
 
-char* smmObj_getNodeName(int node_type)
+int smmObj_getObjectCredit(void *ptr)
 {
-      return (smmNodeName[node_type]);
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+      
+      return (objPtr->credit);
+}
+      
+int smmObj_getObjectEnergy(void *ptr)
+{
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+     
+      return (objPtr->energy);
 }
 
+char* smmObj_getTypeName(int node_type)
+{
+    switch (node_type)
+    {
+    }
+}
+
+#if 0
+char* smmObj_getTypeName(void *ptr)
+{
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+     
+      return (objPtr->);
+}
+#endif
 
 #if 0
 //element to string
-char* smmObj_getNodeName(smmNode_e type)
-{
-    return smmNodeName[type];
-}
-
 char* smmObj_getGradeName(smmGrade_e grade)
 {
     return smmGradeName[grade];

@@ -65,6 +65,7 @@ typedef struct {
 } smmObj_object_t;
 
 
+
 //object generation
 void* smmObj_genObject(char* name, int objType, int type, int credit, int energy, int grade)
 {
@@ -112,26 +113,27 @@ int smmObj_getObjectEnergy(void *ptr)
       return (objPtr->energy);
 }
 
-char* smmObj_getTypeName(int node_type)
+
+int smmObj_getObjectGrade(void *ptr)
 {
-    switch (node_type)
-    {
-    }
+      smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
+      
+      return (objPtr->grade);
 }
 
-#if 0
-char* smmObj_getTypeName(void *ptr)
+int smmObj_getTypeName(void *ptr)
 {
       smmObj_object_t* objPtr = (smmObj_object_t*)ptr;
      
-      return (objPtr->);
+      return (objPtr->objType);
 }
-#endif
 
-#if 0
+
+
 //element to string
+
 char* smmObj_getGradeName(smmGrade_e grade)
 {
-    return smmGradeName[grade];
+    return smmObj_gradeName[grade];
 }
-#endif
+
